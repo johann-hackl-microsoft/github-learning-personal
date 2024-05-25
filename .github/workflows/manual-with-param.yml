@@ -19,11 +19,10 @@ jobs:
     steps:
     - name: Validate compute_unit
       run: |
-        if [[ -z "${{ inputs.compute_unit }}" ]]; then
+        compute_unit="${{ inputs.compute_unit }}"
+        if [[ -z "$compute_unit" ]]; then
           compute_unit="default compute unit!"
-        elif [[ ${{ inputs.compute_unit }} =~ ^[0-9a-zA-Z\-_]+$ ]]; then
-          compute_unit="${{ inputs.compute_unit }}"
-        else
+        elif ! [[ "$compute_unit" =~ ^[0-9A-Za-z\_\-]+$ ]]; then
           echo "Invalid compute unit!" >&2
           exit 1
         fi
