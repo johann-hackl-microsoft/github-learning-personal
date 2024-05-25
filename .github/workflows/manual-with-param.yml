@@ -22,6 +22,7 @@ jobs:
       run: |
         if ! [[ ${{ inputs.compute_unit }} =~ ^[0-9a-zA-z\-_]+$ ]]; then
           echo "Invalid compute unit!" >&2
+          exit 1
         fi
         set compute_unit="${{ inputs.compute_unit }}"
         echo "Hello $compute_unit"
