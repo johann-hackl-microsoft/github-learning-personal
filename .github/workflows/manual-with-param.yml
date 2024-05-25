@@ -8,7 +8,6 @@ on:
       compute_unit:
         description: 'Compute Unit to swap services staging vs. production'
         # Default value if no value is explicitly provided
-        default: 'default!'
         required: false
         type: string
 
@@ -20,9 +19,12 @@ jobs:
     steps:
     - name: Validate compute_unit
       run: |
-        if ! [[ ${{ inputs.compute_unit }} =~ ^[0-9a-zA-z\-_]+$ ]]; then
+        if ! [[ "${{ inputs.compute_unit }}" =~ ^[0-9a-zA-z\-_]+$ ]]; then
           echo "Invalid compute unit!" >&2
           exit 1
         fi
         set compute_unit="${{ inputs.compute_unit }}"
+        if [[ -z "$compute_unit" ]]; then
+          set compute_unit="default compute unit!"
+        fi
         echo "Hello $compute_unit"
